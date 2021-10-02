@@ -1,16 +1,16 @@
 #page-auth {
     display: flex;
     align-items: stretch;
-    height: 100vh;
+    height: 100vh; // A página ocupa o tamanho total da Altura da Tela
 
     aside{
-        flex: 7;
+        flex: 7; /* Ocupar 7 'unidades flexiveis' ou 700px */
 
         background: #835afd;
         color: #fff;
 
         display: flex;
-        flex-direction: column;
+        flex-direction: column; // Conteúdo um abaixo do outro
         justify-content: center;
 
         padding: 120px 80px;
@@ -34,7 +34,7 @@
     }
 
     main {
-        flex: 8;
+        flex: 8; /* Ocupar 8 'unidades flexiveis' ou 800px */
 
         padding: 0 32px;
 
@@ -48,7 +48,7 @@
         flex-direction: column;
         width: 100%;
         max-width: 320px;
-        align-items: stretch;
+        align-items: stretch;  /* Todos os elementos estricam para caber no container total (320px)*/
         text-align: center;
 
         > img {
@@ -79,6 +79,32 @@
             }
         }
     }
+
+    .create-room {
+        margin-top: 64px;
+        height: 50px;
+        border-radius: 8px;
+        font-weight: 500;
+        background: #ea4335;
+        color: #fff;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        cursor: pointer; // tipo de imagem do mouse
+        border: 0;
+
+        transition: 0.2s; // Tempo de transição quando acontecer uma mudança
+
+        img {
+            margin-right: 8px;
+        }
+        &:hover{
+            background: #a02040;
+        }
+    }
+
     .separator {
         font-size: 14px;
         color: #a8a8b3;
@@ -87,15 +113,16 @@
         display: flex;
         align-items: center;
 
-
+        /*antes do <- 'texto' */
         &::before {
-            content: '';
+            content: ''; // texto vazio
             flex: 1;
-            height: 1px;
+            height: 1px; // tamanho da linha
             background: #a8a8b3;
-            margin-right: 16px;
+            margin-right: 16px; // espaçamento entre o texto
         }
 
+        /*depois do 'texto' -> */
         &::after {
             content: '';
             flex: 1;

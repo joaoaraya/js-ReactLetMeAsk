@@ -1,0 +1,34 @@
+// Componente Botão (usado em vários lugares)
+
+.button {
+    margin-top: 64px; 
+    height: 50px;
+    border-radius: 8px;
+    font-weight: 500;
+    background: #8351fd;
+    color: #fff;
+    padding: 0 32px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer; // tipo de imagem do mouse
+    border: 0;
+
+    transition: 0.2s; // Tempo de transição quando acontecer uma mudança
+
+    img {
+        margin-right: 8px;
+    }
+
+    // Funções do SCSS: se 'não' estiver 'desabilitado' no 'hover/mouse em cima' aplicar esse estilo
+    &:not(:disabled):hover{
+        background: #3f17a1;
+    }
+    // Funções do SCSS: se estiver 'desabilitado' aplicar esse estilo
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
