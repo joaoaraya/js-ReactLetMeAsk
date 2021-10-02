@@ -1,3 +1,6 @@
+import { useAuth } from '../hooks/useAuth';
+import { useHistory } from 'react-router-dom'
+
 /// No React é preciso Importar as imagens antes de colocar os links
 import ilustrationImg from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';
@@ -9,12 +12,23 @@ import { Button } from '../components/Button';
 // Importar o estilo geral da página
 import '../styles/auth.scss';
 
-// Obs1: 'aside' é uma lateral OU coluna no html / 'Main' é a coluna principal / 
-// Obs2: 'Form' uma area de formularios com botão de enviar para o servidor
-// Obs3: Ao invés de usar Class nas tags, use className
-// Obs4: as tags usadas em letras Maiúsculas, são: componentes
-
 export function Home() {
+    const history = useHistory();
+    const { user, signInWithGoogle } = useAuth()
+
+    async function handleCreateRoom() {
+        if (!user) {
+            await signInWithGoogle()
+        }
+
+        history.push('/rooms/new');
+    }
+
+    // Obs1: 'aside' é uma lateral OU coluna no html / 'Main' é a coluna principal / 
+    // Obs2: 'Form' uma area de formularios com botão de enviar para o servidor
+    // Obs3: Ao invés de usar Class nas tags, use className
+    // Obs4: as tags usadas em letras Maiúsculas, são: componentes
+
     return (
         <div id='page-auth'>
             <aside>
@@ -25,7 +39,7 @@ export function Home() {
             <main>
                 <div className='main-content'>
                     <img src={logoImg} />
-                    <button className='create-room'>
+                    <button onClick={handleCreateRoom} className='create-room'>
                         <img src={googleIconImg} />
                         Crie sua sala com o Google
                     </button>
@@ -37,5 +51,5 @@ export function Home() {
                 </div>
             </main>
         </div>
-    );
-};
+    )
+}
