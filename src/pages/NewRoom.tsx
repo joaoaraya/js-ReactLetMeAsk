@@ -33,7 +33,7 @@ export function NewRoom() {
             return;
         }
 
-        // Criar seção no banco de dados com o nome 'Rooms'
+        // Fazer uma seção no banco de dados com o nome 'Rooms'
         const roomRef = database.ref('rooms');
 
         // Se der certo(await) incluir(push) os dados (title = $newRoom(nome da room na input)
