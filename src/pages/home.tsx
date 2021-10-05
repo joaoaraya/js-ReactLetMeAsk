@@ -21,6 +21,7 @@ export function Home() {
     const { user, signInWithGoogle } = useAuth()
     const [roomCode, setRoomCode] = useState('');
 
+    /// Criar nova sala
     async function handleCreateRoom() {
         if (!user) {
             await signInWithGoogle()
@@ -45,6 +46,12 @@ export function Home() {
         // Se não existir...
         if (!roomRef.exists()) {
             alert('A sala não existe');
+            return;
+        }
+
+        // Se estiver encerrada...
+        if (roomRef.val().endedAt) {
+            window.alert('Sala Encerrada!');
             return;
         }
 

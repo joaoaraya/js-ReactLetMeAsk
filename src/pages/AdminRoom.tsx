@@ -1,9 +1,9 @@
 // importar funções do react
-import { FormEvent, useState } from 'react';
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 
 /// No React é preciso Importar as imagens antes de colocar os links
 import logoImg from '../assets/images/logo.svg';
+import deleteImg from '../assets/images/delete.svg';
 
 // Importar componentes
 import { Button } from '../components/Button';
@@ -26,43 +26,27 @@ type RoomParams = {
 }
 
 export function AdminRoom() {
-    const { user } = useAuth();
+    //const { user } = useAuth();
+    const history = useHistory()
     const params = useParams<RoomParams>();
-    const [newQuestion, setNewQuestion] = useState('');
 
     const roomId = params.id;
     const { title, questions } = useRoom(roomId);
 
-    /// Criar nova pergunta
-    async function handleCreateNewQuestion(event: FormEvent) {
-        event.preventDefault();
+    /// Encerrar Sala
+    async function handleEndRoom() {
+        database.ref(`rooms/${roomId}`).update({
+            endedAt: new Date(),
+        })
 
-        // se a text area estiver vazia (nao enviar pergunta) 
-        if (newQuestion.trim() === '') {
-            return;
+        history.push('/'); // voltar para o incio
+    }
+
+    /// Deletar pergunta
+    async function handleDeleteQuestion(questionId: string) {
+        if (window.confirm('Deseja excluir essa pergunta?')) {
+            await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
         }
-
-        // Somente se o usuario n estiver logado
-        if (!user) {
-            throw new Error('você precisa estar logado');
-        }
-
-        // Criar uma nova pergunta com todas as informações do usuario
-        const question = {
-            content: newQuestion,
-            author: {
-                name: user?.name,
-                avatar: user.avatar
-            },
-            isHighLighted: false,
-            isAnswer: false
-        };
-
-        // Se der certo enviar para o banco de dados
-        await database.ref(`rooms/${roomId}/questions`).push(question);
-
-        // Limpar a area de texto
-        setNewQuestion('');
     }
 
     return (
@@ -72,7 +56,10 @@ export function AdminRoom() {
                     <img src={logoImg} alt="" />
                     <div>
                         <RoomCode code={roomId} />
-                        <Button isOutlined> Encerrar sala</Button>
+                        <Button
+                            isOutlined
+                            onClick={handleEndRoom}
+                        > Encerrar sala</Button>
                     </div>
                 </div>
             </header>
@@ -90,7 +77,14 @@ export function AdminRoom() {
                                 key={question.id} // Algorito de Reconciliação
                                 content={question.content}
                                 author={question.author}
-                            />
+                            >
+                                <Button
+                                    type="button"
+                                    onClick={() => handleDeleteQuestion(question.id)}
+                                >
+                                    <img src={deleteImg} alt="deletar pergunta" />
+                                </Button>
+                            </Question>
                         );
                     })}
                 </div>
