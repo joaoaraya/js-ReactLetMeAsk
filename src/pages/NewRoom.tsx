@@ -50,13 +50,13 @@ export function NewRoom() {
     return (
         <div id='page-auth'>
             <aside>
-                <img src={ilustrationImg} />
+                <img src={ilustrationImg} alt="" />
                 <strong>Crie salas de Q&amp;A ao-vivo</strong>
                 <p>Tire suas dúvidas da sua adiencia em tempo real</p>
             </aside>
             <main>
                 <div className='main-content'>
-                    <img src={logoImg} />
+                    <img src={logoImg} alt="" />
                     <h2>Criar uma nova sala</h2>
                     <form onSubmit={handleCreateRoom}>
                         <input
