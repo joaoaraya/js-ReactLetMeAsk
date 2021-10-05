@@ -21,8 +21,16 @@
         margin-right: 8px;
     }
 
+    // Funções do SCSS: se o botão tiver a class 'outlined'
+    &.outlined {
+        background: #fff;
+        border: 1px solid #835afd;
+        color: #835afd;
+    }
+
     // Funções do SCSS: se 'não' estiver 'desabilitado' no 'hover/mouse em cima' aplicar esse estilo
     &:not(:disabled):hover{
+        color: #fff;
         background: #3f17a1;
     }
     // Funções do SCSS: se estiver 'desabilitado' aplicar esse estilo
