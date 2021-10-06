@@ -4,6 +4,8 @@ import { useHistory, useParams } from 'react-router-dom'
 /// No React é preciso Importar as imagens antes de colocar os links
 import logoImg from '../assets/images/logo.svg';
 import deleteImg from '../assets/images/delete.svg';
+import checkImg from '../assets/images/check.svg';
+import answerImg from '../assets/images/answer.svg';
 
 // Importar componentes
 import { Button } from '../components/Button';
@@ -42,6 +44,20 @@ export function AdminRoom() {
         history.push('/'); // voltar para o incio
     }
 
+    /// Marcar como respondido
+    async function handleCheckQuestionAsAnswered(questionId: string) {
+        await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
+            isAnswered: true,
+        });
+    }
+
+    /// Destacar pergunta
+    async function handleHighlightQuestion(questionId: string) {
+        await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
+            isHighlighted: true,
+        });
+    }
+
     /// Deletar pergunta
     async function handleDeleteQuestion(questionId: string) {
         if (window.confirm('Deseja excluir essa pergunta?')) {
@@ -77,7 +93,27 @@ export function AdminRoom() {
                                 key={question.id} // Algorito de Reconciliação
                                 content={question.content}
                                 author={question.author}
-                            >
+                                isAnswered={question.isAnswered}
+                                isHighlighted={question.isHighlighted}
+
+                            // <> vazio se chama fragment no React
+                            >{!question.isAnswered && (
+                                <>
+                                    <Button
+                                        type="button"
+                                        onClick={() => handleCheckQuestionAsAnswered(question.id)}
+                                    >
+                                        <img src={checkImg} alt="Marcar como respondido" />
+                                    </Button>
+
+                                    <Button
+                                        type="button"
+                                        onClick={() => handleHighlightQuestion(question.id)}
+                                    >
+                                        <img src={answerImg} alt="Destacar pergunta" />
+                                    </Button>
+                                </>
+                            )}
                                 <Button
                                     type="button"
                                     onClick={() => handleDeleteQuestion(question.id)}
